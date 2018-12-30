@@ -10,14 +10,15 @@ class Peer:
 
 class User(Peer):
     def __init__(self, data: BeautifulSoup):
-        if 'jid' not in data.attrs:
-            raise KikApiException("No jid in user xml {}".format(data))
-        super().__init__(data['jid'])
-        self.username = data.username.text if data.username else None
+        super().__init__(data.jid)
+        self.username = data.username.text if data.username else data.get('username')
         self.display_name = data.find('display-name').text if data.find('display-name') else None
         self.pic = data.pic.text if data.pic else None
         self.verified = True if data.verified else False
-
+    
+    def is_exists(self):
+        return True if self.jid else False;
+        
     def __str__(self):
         return "{} ({})".format(self.display_name, self.username)
 
