@@ -274,7 +274,7 @@ class IncomingStatusResponse(XMPPResponse):
         status = data.find('status')
         self.from_jid = data['from']
         self.status = status.text
-        self.special_visibility = status['special-visibility'] == 'true'
+        self.special_visibility = status.get('special-visibility') == 'true'
         self.status_jid = status['jid']
 
 
